@@ -29,9 +29,12 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { username,email,role,classLevel, password } = req.body;
     const saved = await userModel.create({
+      username,
+      role,
       email,
+      classLevel,
       password,
     });
     if (saved) {
@@ -58,11 +61,11 @@ const updateUser = async (req, res) => {
     const id = req.params.id;
     // querying the user in the database
     const user = await userModel.findById(id);
-    const { email, classLevel, role, permission } = req.body;
+    const { username,email, classLevel, role, permission } = req.body;
     if (user) {
       const updated = await userModel.updateOne(
         { email: user.email },
-        { email, classLevel, role,permission }
+        { username,email, classLevel, role,permission }
       );
 
       if (updated) {
